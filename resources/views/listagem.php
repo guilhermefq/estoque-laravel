@@ -1,6 +1,7 @@
 <html>
     <head>
         <link href="/css/app.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <title>Controle de estoque</title>
     </head>
     <body>
@@ -13,6 +14,11 @@
                     <td><?= $p->valor ?></td>
                     <td><?= $p->descricao ?></td>
                     <td><?= $p->quantidade ?></td>
+                    <td>
+                        <a href="/produtos/mostra/<?= $p->id ?>">
+                            <span class="fas fa-search"></span>
+                        </a>
+                    </td>
                 </tr>
                 <?php endforeach ?>
             </table>
