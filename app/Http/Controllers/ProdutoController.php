@@ -8,6 +8,14 @@ use estoque\Http\Requests\ProdutosRequest;
 
 class ProdutoController extends Controller {
 
+    public function __construct()
+    {
+        /* $this->middleware('nosso-middleware',
+            ['only' => ['adiciona', 'remove']]); */
+        $this->middleware('auth',
+            ['only' => ['adiciona', 'remove']]);
+    }
+
     public function lista() {
 
         //$produtos = DB::select('select * from produtos');

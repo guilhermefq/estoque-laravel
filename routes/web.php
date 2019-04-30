@@ -23,4 +23,10 @@ Route::get('/produtos/remove/{id}', 'ProdutoController@remove');
 
 Route::get('produtos/json', 'ProdutoController@listaJson');
 
+Route::get('/login', 'LoginController@login');
+Route::post('/logout', 'LoginController@logout');
+
+//Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
 
