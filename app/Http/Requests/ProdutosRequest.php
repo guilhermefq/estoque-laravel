@@ -13,7 +13,7 @@ class ProdutosRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,17 @@ class ProdutosRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nome' => 'required|max:100',
+            'descricao' => 'required|max:255',
+            'valor' => 'required|numeric'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'required' => 'The :attribute field can not be empty.',
+            'nome.required' => 'O campo nome não pode ser vazio.',
         ];
     }
 }

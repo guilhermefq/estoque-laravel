@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use estoque\Produto;
 use Request;
+use estoque\Http\Requests\ProdutosRequest;
 
 class ProdutoController extends Controller {
 
@@ -47,13 +48,13 @@ class ProdutoController extends Controller {
         return view('produto.formulario');
     }
 
-    public function adiciona(){
+    public function adiciona(ProdutosRequest $request){
         // $all = Request::all(); //Retorna um array com todos os valores
         // $only = Request:only('nome', 'valor', '...');
 
         //$params = Request::all();
         //$produto = new Produto($params);
-        Produto::create(Request::all()); // factory method
+        Produto::create($request->all()); // factory method
         /*$produto->nome = Request::input('nome');
         $produto->descricao = Request::input('descricao');
         $produto->valor = Request::input('valor');
