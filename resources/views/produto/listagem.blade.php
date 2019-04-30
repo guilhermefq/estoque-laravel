@@ -18,6 +18,11 @@
                         <span class="fas fa-search"></span>
                     </a>
                 </td>
+                <td>
+                    <a href="{{action('ProdutoController@remove', $p->id)}}">
+                        <span class="fas fa-trash-alt"></span>
+                    </a>
+                </td>
             </tr>
             @endforeach
         </table>

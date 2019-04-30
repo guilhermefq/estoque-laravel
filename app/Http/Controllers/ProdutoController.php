@@ -2,13 +2,15 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use estoque\Produto;
 use Request;
 
 class ProdutoController extends Controller {
 
     public function lista() {
 
-        $produtos = DB::select('select * from produtos');
+        //$produtos = DB::select('select * from produtos');
+        $produtos = Produto::all();
 
         return view('produto.listagem')->with('produtos', $produtos);
 
@@ -32,12 +34,13 @@ class ProdutoController extends Controller {
 
     public function mostra($id) {
         //$id = Request::route('id');
-        $resposta = DB::select('select * from produtos where id = ?',[$id]);
+        //$resposta = DB::select('select * from produtos where id = ?',[$id]);
+        $produto = Produto::find($id);
 
-        if(empty($resposta)) {
+        if(empty($produto)) {
             return "Esse produto não existe";
         }
-            return view('produto.detalhes')->with('p', $resposta[0]);
+            return view('produto.detalhes')->with('p', $produto);
     }
 
     public function novo(){
@@ -48,19 +51,23 @@ class ProdutoController extends Controller {
         // $all = Request::all(); //Retorna um array com todos os valores
         // $only = Request:only('nome', 'valor', '...');
 
-        $nome = Request::input('nome');
-        $descricao = Request::input('descricao');
-        $valor = Request::input('valor');
-        $quantidade = Request::input('quantidade');
+        //$params = Request::all();
+        //$produto = new Produto($params);
+        Produto::create(Request::all()); // factory method
+        /*$produto->nome = Request::input('nome');
+        $produto->descricao = Request::input('descricao');
+        $produto->valor = Request::input('valor');
+        $produto->quantidade = Request::input('quantidade');*/
 
+        // $produto->save(); // substituido pelo factory method
         // DB::insert('insert into produtos (nome, quantidade, valor, descricao) values (?,?,?,?)',
         // array($nome, $quantidade, $valor, $descricao));
-        DB::table('produtos')->insert(
+        /* DB::table('produtos')->insert(
             ['nome' => $nome,
              'valor' => $valor,
              'descricao' => $descricao,
              'quantidade' => $quantidade]
-        );
+        ); */
 
         return redirect()->action('ProdutoController@lista')->withInput(Request::only('nome'));
         // return redirect('/produtos')->withInput(Request::only('nome'));
@@ -68,9 +75,16 @@ class ProdutoController extends Controller {
         // return implode(', ', array($nome, $descricao, $valor, $quantidade));
     }
 
+    public function remove($id){
+        $produto = Produto::find($id);
+        $produto->delete();
+
+        return redirect()->action('ProdutoController@lista');
+    }
+
     public function listaJson(){
-        $produtos = DB::select('select * from produtos');
+        $produtos = Produto::all();
         return $produtos;
-        // return response()->json($produtos);
+        // return response()->json($produtos); // De forma explicita
     }
 }
