@@ -62,7 +62,15 @@ class ProdutoController extends Controller {
              'quantidade' => $quantidade]
         );
 
-        return view('produto.adicionado')->with('nome', $nome);
+        return redirect()->action('ProdutoController@lista')->withInput(Request::only('nome'));
+        // return redirect('/produtos')->withInput(Request::only('nome'));
+        // return view('produto.adicionado')->with('nome', $nome);
         // return implode(', ', array($nome, $descricao, $valor, $quantidade));
+    }
+
+    public function listaJson(){
+        $produtos = DB::select('select * from produtos');
+        return $produtos;
+        // return response()->json($produtos);
     }
 }
